@@ -1,0 +1,256 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Real Estate App Showcase</title>
+
+    <!-- Google Fonts (Serif style) -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Inter:wght@300;400&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      body {
+        margin: 0;
+        font-family: "Inter", sans-serif;
+        background: #f8f7f4;
+        color: #1a1a1a;
+        text-align: center;
+      }
+
+      h1,
+      h2 {
+        font-family: "Playfair Display", serif;
+      }
+
+      header {
+        padding: 40px 20px;
+      }
+
+      h1 {
+        font-size: 2.5rem;
+        margin-bottom: 10px;
+      }
+
+      ul {
+        list-style: none;
+        padding: 0;
+        margin-top: 20px;
+      }
+
+      li {
+        background: white;
+        margin: 10px auto;
+        padding: 12px 20px;
+        max-width: 250px;
+        border-radius: 12px;
+        font-family: "Playfair Display", serif;
+        font-size: 0.95rem;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+        transition: 0.3s;
+      }
+
+      li:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 12px 25px rgba(0, 0, 0, 0.08);
+      }
+
+      p {
+        color: #555;
+      }
+
+      .github-btn {
+        display: inline-block;
+        margin-top: 20px;
+        padding: 12px 24px;
+        background: #1a1a1a;
+        color: white;
+        border-radius: 30px;
+        text-decoration: none;
+        transition: 0.3s;
+      }
+
+      .github-btn:hover {
+        background: #444;
+      }
+
+      /* Carousel */
+      .carousel-container {
+        position: relative;
+        max-width: 340px;
+        margin: 40px auto;
+      }
+
+      .carousel img {
+        width: 100%;
+        height: 650px;
+        border-radius: 25px;
+        display: none;
+        object-fit: contain;
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.1);
+        background: white;
+      }
+
+      .carousel img.active {
+        display: block;
+      }
+
+      .btn {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        background: white;
+        border: none;
+        width: 45px;
+        height: 45px;
+        border-radius: 50%;
+        font-size: 1.5rem;
+        cursor: pointer;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      .prev {
+        left: -60px;
+      }
+      .next {
+        right: -60px;
+      }
+
+      .screen-title {
+        margin-top: 15px;
+        font-weight: 500;
+        color: #777;
+      }
+
+      /* Video */
+      video {
+        width: 90%;
+        max-width: 350px;
+        border-radius: 20px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      }
+
+      .section {
+        margin: 60px 0;
+        padding: 0 20px;
+      }
+
+      /* Features */
+      .features {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+        flex-wrap: wrap;
+      }
+
+      .card {
+        background: white;
+        padding: 20px;
+        border-radius: 20px;
+        width: 160px;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+      }
+
+      footer {
+        margin: 50px 0;
+        color: #888;
+      }
+
+      @media (max-width: 600px) {
+        .prev {
+          left: -30px;
+        }
+        .next {
+          right: -30px;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <header>
+      <h1>Luxury Real Estate App</h1>
+      <p>Discover, explore and find your dream home</p>
+
+      <a class="github-btn" href="#" target="_blank"> View Project </a>
+    </header>
+
+    <section class="section">
+      <h2>App Screens</h2>
+
+      <div class="carousel-container">
+        <button class="btn prev" onclick="prevSlide()">‹</button>
+
+        <div class="carousel">
+          <img src="login.jpeg" class="active" alt="login screen" />
+          <img src="HomeScreen.jpeg" alt="home screen" />
+          <img src="HomeRecomment.jpeg" alt="home recommendation screen" />
+          <img src="explore.jpeg" alt="explore screen" />
+          <img src="ProfileScreen.jpeg" alt="profile screen" />
+        </div>
+
+        <button class="btn next" onclick="nextSlide()">›</button>
+      </div>
+
+      <div class="screen-title" id="screenTitle">Home Screen</div>
+    </section>
+
+    <section class="section">
+      <h2>Demo Video</h2>
+      <video controls>
+        <source src="demo.mp4" type="video/mp4" />
+      </video>
+    </section>
+
+    <section class="section">
+      <h2>Tech Stack</h2>
+      <ul>
+        <li>React Native</li>
+        <li>Appwrite</li>
+        <li>TypeScript</li>
+        <li>Expo</li>
+        <li>NativeWind</li>
+        <li>Context API</li>
+        <li>Custom Hook</li>
+      </ul>
+    </section>
+
+    <footer>
+      <p>Built by Ayan Khan</p>
+    </footer>
+
+    <script>
+      let current = 0;
+      const slides = document.querySelectorAll(".carousel img");
+      console.log("sclide", slides);
+
+      const titles = [
+        "Login Screen",
+        "Home Screen",
+        "Home Recommendation",
+        "Explore Screen",
+        "Profile Screen",
+      ];
+
+      const titleEl = document.getElementById("screenTitle");
+
+      function showSlide(index) {
+        slides.forEach((img) => img.classList.remove("active"));
+        slides[index].classList.add("active");
+        titleEl.textContent = titles[index];
+      }
+
+      function nextSlide() {
+        current = (current + 1) % slides.length;
+        showSlide(current);
+      }
+
+      function prevSlide() {
+        current = (current - 1 + slides.length) % slides.length;
+        showSlide(current);
+      }
+    </script>
+  </body>
+</html>

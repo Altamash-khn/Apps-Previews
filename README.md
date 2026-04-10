@@ -1,4 +1,4 @@
-# 📱 App Previews
+#  App Previews
 
 This repository contains a collection of mobile app previews.
 
@@ -43,6 +43,3 @@ This repo helps the above mentioned projects to show their demo
 
 ---
 
-## Author
-
-Altamash

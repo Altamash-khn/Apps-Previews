@@ -1,0 +1,739 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Fast Food App Showcase</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      :root {
+        --bg: #ffffff;
+        --text: #111;
+        --card: #f8f9fa;
+        --accent: #ff8c00;
+        --glass: rgba(255, 255, 255, 0.9);
+      }
+
+      body.dark {
+        --bg: #0f0f0f;
+        --text: #ffffff;
+        --card: #1c1c1c;
+        --glass: rgba(15, 15, 15, 0.95);
+      }
+
+      body {
+        margin: 0;
+        font-family: "Poppins", sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        transition: background 0.4s ease;
+        overflow-x: hidden;
+      }
+
+      .nav {
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        backdrop-filter: blur(10px);
+        background: var(--glass);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px 25px;
+        border-bottom: 1px solid rgba(128, 128, 128, 0.1);
+      }
+
+      .logo-container {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-weight: 600;
+        font-size: 1.2rem;
+        color: var(--accent);
+        z-index: 1001;
+      }
+
+      .logo-icon {
+        width: 30px;
+        height: 30px;
+        fill: var(--accent);
+      }
+
+      .nav-links {
+        display: flex;
+        gap: 15px;
+        align-items: center;
+      }
+
+      .nav-links span {
+        cursor: pointer;
+        font-size: 0.9rem;
+        opacity: 0.7;
+        transition: 0.3s;
+        padding: 8px 12px;
+      }
+
+      .nav-links span.active {
+        opacity: 1;
+        color: var(--accent);
+        font-weight: 600;
+      }
+
+      .menu-btn {
+        display: none;
+        cursor: pointer;
+        z-index: 1001;
+        background: none;
+        border: none;
+        padding: 5px;
+        color: var(--text);
+      }
+
+      @media (max-width: 768px) {
+        .nav-links {
+          position: fixed;
+          top: 0;
+          right: -100%;
+          width: 80%;
+          height: 100vh;
+          background: var(--bg);
+          flex-direction: column;
+          justify-content: center;
+          transition: 0.4s cubic-bezier(0.17, 0.55, 0.55, 1);
+          box-shadow: -10px 0 30px rgba(0, 0, 0, 0.1);
+        }
+        .nav-links.open {
+          right: 0;
+        }
+        .nav-links span {
+          font-size: 1.5rem;
+          width: 100%;
+          text-align: center;
+          padding: 20px 0;
+        }
+        .menu-btn {
+          display: block;
+        }
+        .theme-toggle {
+          margin-top: 20px;
+        }
+      }
+
+      .theme-toggle {
+        cursor: pointer;
+        display: flex;
+        color: var(--text);
+        padding: 8px;
+      }
+
+      .hero {
+        text-align: center;
+        padding: 40px 20px;
+      }
+      .hero h1 {
+        font-size: 2.2rem;
+        margin-bottom: 10px;
+      }
+
+      .content-wrapper {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 10px;
+      }
+
+      .video-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 40px;
+        width: 100%;
+        max-width: 900px;
+        margin-top: 20px;
+      }
+
+      @media (min-width: 850px) {
+        .video-grid {
+          grid-template-columns: 1fr 1fr;
+        }
+      }
+
+      .video-card {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .display-media {
+        width: 100%;
+        height: auto;
+        max-height: 580px;
+        object-fit: contain;
+        border-radius: 32px;
+        background: var(--card);
+        transition: opacity 0.3s;
+        display: block;
+      }
+
+      .mockup-container {
+        background: var(--card);
+        padding: 5px;
+        border-radius: 40px;
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+        width: 280px;
+        border: 7px solid #222;
+        position: relative;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .media-title {
+        margin-top: 15px;
+        font-weight: 600;
+        min-height: 24px;
+        text-align: center;
+      }
+
+      .dots-container {
+        display: flex;
+        gap: 8px;
+        margin-top: 15px;
+      }
+      .dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: rgba(128, 128, 128, 0.3);
+        transition: 0.3s;
+        cursor: pointer;
+      }
+      .dot.active {
+        background: var(--accent);
+        width: 22px;
+        border-radius: 10px;
+      }
+
+      .tech-section {
+        padding: 40px 10%;
+        text-align: center;
+      }
+      .tech-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 15px;
+        max-width: 800px;
+        margin: 30px auto;
+      }
+
+      @media (max-width: 600px) {
+        .video-grid {
+          display: none !important;
+        }
+      }
+      @media (min-width: 600px) {
+        .tech-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+
+      .tech-card {
+        background: var(--card);
+        padding: 20px;
+        border-radius: 16px;
+        border: 1px solid rgba(128, 128, 128, 0.1);
+        opacity: 0;
+      }
+
+      .slide-left {
+        animation: slideInLeft 0.8s forwards ease-out;
+      }
+      .slide-right {
+        animation: slideInRight 0.8s forwards ease-out;
+      }
+      @keyframes slideInLeft {
+        from {
+          transform: translateX(-50px);
+          opacity: 0;
+        }
+        to {
+          transform: translateX(0);
+          opacity: 1;
+        }
+      }
+      @keyframes slideInRight {
+        from {
+          transform: translateX(50px);
+          opacity: 0;
+        }
+        to {
+          transform: translateX(0);
+          opacity: 1;
+        }
+      }
+
+      .tab-content {
+        display: none;
+        animation: fadeIn 0.5s ease;
+      }
+      .tab-content.active {
+        display: block;
+      }
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+
+      footer {
+        text-align: center;
+        padding: 40px;
+        opacity: 0.4;
+        font-size: 0.8rem;
+      }
+
+      .sun-icon {
+        display: none;
+      }
+      body.dark .sun-icon {
+        display: block;
+      }
+      body.dark .moon-icon {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="nav">
+      <div class="logo-container">
+        <svg class="logo-icon" viewBox="0 0 24 24">
+          <path
+            d="M2 17h20c.6 0 1 .4 1 1s-.4 1-1 1H2c-.6 0-1-.4-1-1s.4-1 1-1zm0-4h20c.6 0 1 .4 1 1s-.4 1-1 1H2c-.6 0-1-.4-1-1s.4-1 1-1zm18.5-2c-1.2-2.5-3.1-4.5-5.5-5.6C13.8 4.8 12.4 4.5 11 4.5c-3.6 0-6.8 2.3-8 5.6-.2.4 0 .9.4 1.1.4.2.9 0 1.1-.4 1-2.7 3.6-4.6 6.5-4.6 1.1 0 2.3.3 3.3.8 2 1 3.5 2.7 4.5 4.7.2.4.7.6 1.1.4.4-.2.6-.7.4-1.1z"
+          />
+        </svg>
+        <span>FastFood</span>
+      </div>
+      <button class="menu-btn" onclick="toggleMenu()">
+        <svg
+          id="hamburgerIcon"
+          width="30"
+          height="30"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <line x1="3" y1="12" x2="21" y2="12"></line>
+          <line x1="3" y1="6" x2="21" y2="6"></line>
+          <line x1="3" y1="18" x2="21" y2="18"></line>
+        </svg>
+        <svg
+          id="closeIcon"
+          style="display: none"
+          width="30"
+          height="30"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+
+      <div class="nav-links" id="navLinks">
+        <span class="nav-link active" onclick="handleNav('auth', this)"
+          >Auth</span
+        >
+        <span class="nav-link" onclick="handleNav('app', this)">App</span>
+        <span class="nav-link" onclick="handleNav('videos', this)">Videos</span>
+        <span class="nav-link" onclick="handleNav('tech', this)"
+          >Tech Stack</span
+        >
+
+        <div class="theme-toggle" onclick="toggleMode()">
+          <svg
+            class="moon-icon"
+            width="22"
+            height="22"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          </svg>
+          <svg
+            class="sun-icon"
+            width="22"
+            height="22"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+          </svg>
+        </div>
+      </div>
+    </nav>
+
+    <section id="tab-auth" class="tab-content active">
+      <div class="hero">
+        <h1>User Access</h1>
+        <p>Secure onboarding for foodies.</p>
+      </div>
+      <div class="content-wrapper">
+        <div class="mockup-container">
+          <img class="display-media" src="login.jpeg" id="auth-img" />
+        </div>
+        <div class="media-title" id="auth-title">Login Screen</div>
+        <div class="dots-container" id="auth-dots"></div>
+      </div>
+    </section>
+
+    <section id="tab-app" class="tab-content">
+      <div class="hero">
+        <h1>Core Experience</h1>
+        <p>Browse, customize, and order.</p>
+      </div>
+      <div class="content-wrapper">
+        <div class="mockup-container">
+          <img class="display-media" src="home.jpeg" id="app-img" />
+        </div>
+        <div class="media-title" id="app-title">Home Screen</div>
+        <div class="dots-container" id="app-dots"></div>
+      </div>
+    </section>
+
+    <section id="tab-videos" class="tab-content">
+      <div class="hero">
+        <h1>App Demos</h1>
+        <p>Watch the flow in action.</p>
+      </div>
+      <div class="content-wrapper">
+        <div class="video-grid" id="video-grid">
+          <div class="video-card">
+            <div class="mockup-container">
+              <video class="display-media" controls>
+                <source src="auth.mp4" type="video/mp4" />
+              </video>
+            </div>
+            <div class="media-title">Authentication Flow</div>
+          </div>
+
+          <div class="video-card">
+            <div class="mockup-container">
+              <video class="display-media" controls>
+                <source src="app.mp4" type="video/mp4" />
+              </video>
+            </div>
+            <div class="media-title">Core App Features</div>
+          </div>
+        </div>
+
+        <!-- MOBILE SLIDER -->
+        <div class="mockup-container" id="video-slider" style="display: none">
+          <video class="display-media" id="video-player" controls>
+            <source src="auth.mp4" type="video/mp4" />
+          </video>
+        </div>
+
+        <div class="media-title" id="video-title" style="display: none">
+          Authentication Flow
+        </div>
+
+        <div class="dots-container" id="video-dots" style="display: none"></div>
+      </div>
+    </section>
+
+    <section id="tab-tech" class="tab-content">
+      <div class="tech-section">
+        <h2>Engineered With</h2>
+        <div class="tech-grid">
+          <div class="tech-card left">
+            <strong>React Native</strong><br /><small>Mobile Core</small>
+          </div>
+          <div class="tech-card right">
+            <strong>Expo</strong><br /><small>SDK Framework</small>
+          </div>
+          <div class="tech-card left">
+            <strong>TypeScript</strong><br /><small>Strict Typing</small>
+          </div>
+          <div class="tech-card right">
+            <strong>NativeWind</strong><br /><small>Tailwind CSS</small>
+          </div>
+          <div class="tech-card left">
+            <strong>Appwrite</strong><br /><small>Backend/DB</small>
+          </div>
+          <div class="tech-card right">
+            <strong>Zustand</strong><br /><small>State Store</small>
+          </div>
+          <div class="tech-card left">
+            <strong>Custom Hooks</strong><br /><small>Clean Logic</small>
+          </div>
+          <div class="tech-card right">
+            <strong>Async Storage</strong><br /><small>Local Data</small>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer>Designed by Altamash &bull; <span id="year"></span></footer>
+
+    <script>
+      document.getElementById("year").textContent = new Date().getFullYear();
+
+      function toggleMenu() {
+        const nav = document.getElementById("navLinks");
+        const hIcon = document.getElementById("hamburgerIcon");
+        const cIcon = document.getElementById("closeIcon");
+        nav.classList.toggle("open");
+        const isOpen = nav.classList.contains("open");
+        hIcon.style.display = isOpen ? "none" : "block";
+        cIcon.style.display = isOpen ? "block" : "none";
+      }
+
+      function handleNav(tabId, el) {
+
+        showTab(tabId, el);
+        if (window.innerWidth <= 768) toggleMenu();
+      }
+
+      function showTab(tabId, el) {
+        document
+          .querySelectorAll(".nav-link")
+          .forEach((link) => link.classList.remove("active"));
+        el.classList.add("active");
+        document
+          .querySelectorAll(".tab-content")
+          .forEach((tab) => tab.classList.remove("active"));
+        document.getElementById("tab-" + tabId).classList.add("active");
+
+        if (tabId === "tech") {
+          document.querySelectorAll(".tech-card").forEach((card) => {
+            card.classList.remove("slide-left", "slide-right");
+            void card.offsetWidth;
+            card.classList.add(
+              card.classList.contains("left") ? "slide-left" : "slide-right",
+            );
+          });
+        }
+      }
+
+      function toggleMode() {
+        document.body.classList.toggle("dark");
+      }
+
+      const data = {
+        auth: {
+          imgs: ["login.jpeg", "signup.jpeg", "login-successful.jpeg"],
+          titles: ["Login Screen", "Sign Up Screen", "Login Successful"],
+        },
+        app: {
+          imgs: [
+            "home.jpeg",
+            "search.jpeg",
+            "search-filter.jpeg",
+            "cart.jpeg",
+            "empty-cart.jpeg",
+            "profile.jpeg",
+            "edit-profile.jpeg",
+            "menu.jpeg",
+            "menu-customizations.jpeg",
+          ],
+          titles: [
+            "Home Screen",
+            "Search Page",
+            "Search Filter",
+            "Cart",
+            "Empty Cart Page",
+            "User Profile",
+            "Edit User Profile",
+            "Explore Menu",
+            "Menu Customizations",
+          ],
+        },
+      };
+
+      let counters = { auth: 0, app: 0 };
+      let intervals = { auth: null, app: null };
+
+      function initDots(type) {
+        const container = document.getElementById(type + "-dots");
+        if (!container) return;
+        container.innerHTML = "";
+        data[type].imgs.forEach((_, i) => {
+          const dot = document.createElement("div");
+          dot.className = `dot ${i === 0 ? "active" : ""}`;
+          dot.onclick = () => goToSlide(type, i);
+          container.appendChild(dot);
+        });
+      }
+
+      function goToSlide(type, index) {
+        counters[type] = index;
+        updateSliderUI(type);
+        resetTimer(type);
+      }
+
+      function updateSliderUI(type) {
+        const img = document.getElementById(type + "-img");
+        const title = document.getElementById(type + "-title");
+        const dots = document
+          .getElementById(type + "-dots")
+          .querySelectorAll(".dot");
+
+        img.style.opacity = 0;
+        setTimeout(() => {
+          img.src = data[type].imgs[counters[type]];
+          title.innerText = data[type].titles[counters[type]];
+          dots.forEach(
+            (d, i) =>
+              (d.className = `dot ${i === counters[type] ? "active" : ""}`),
+          );
+          img.style.opacity = 1;
+        }, 300);
+      }
+
+      function resetTimer(type) {
+        clearInterval(intervals[type]);
+        intervals[type] = setInterval(() => {
+          counters[type] = (counters[type] + 1) % data[type].imgs.length;
+          updateSliderUI(type);
+        }, 4000);
+      }
+
+      initDots("auth");
+      initDots("app");
+      resetTimer("auth");
+      resetTimer("app");
+
+      const videoData = {
+        videos: ["auth.mp4", "app.mp4"],
+        titles: ["Authentication Flow", "Core App Features"],
+      };
+
+      let videoIndex = 0;
+      let videoInterval = null;
+
+      function initVideoSlider() {
+        const isMobile = window.innerWidth < 600;
+
+        const grid = document.getElementById("video-grid");
+        const slider = document.getElementById("video-slider");
+        const dotsContainer = document.getElementById("video-dots");
+        const title = document.getElementById("video-title");
+
+        if (!grid || !slider) return;
+
+        if (isMobile) {
+          grid.style.display = "none";
+          slider.style.display = "flex";
+          dotsContainer.style.display = "flex";
+          title.style.display = "block";
+
+          dotsContainer.innerHTML = "";
+          videoData.videos.forEach((_, i) => {
+            const dot = document.createElement("div");
+            dot.className = `dot ${i === 0 ? "active" : ""}`;
+            dot.onclick = () => goToVideo(i);
+            dotsContainer.appendChild(dot);
+          });
+
+          startVideoSlider();
+        } else {
+          grid.style.display = "grid";
+          slider.style.display = "none";
+          dotsContainer.style.display = "none";
+          title.style.display = "none";
+
+          clearInterval(videoInterval);
+        }
+      }
+
+      function goToVideo(index) {
+        videoIndex = index;
+        updateVideoUI();
+        restartVideoTimer();
+      }
+
+      function updateVideoUI() {
+        const player = document.getElementById("video-player");
+        const title = document.getElementById("video-title");
+        const dots = document.querySelectorAll("#video-dots .dot");
+
+        player.pause();
+
+        player.innerHTML = `<source src="${videoData.videos[videoIndex]}" type="video/mp4">`;
+        player.load();
+
+        title.innerText = videoData.titles[videoIndex];
+
+        dots.forEach((d, i) => {
+          d.className = `dot ${i === videoIndex ? "active" : ""}`;
+        });
+
+        attachVideoListeners();
+      }
+
+      function startVideoSlider() {
+        videoInterval = setInterval(() => {
+          const player = document.getElementById("video-player");
+
+          if (player && !player.paused) return;
+
+          videoIndex = (videoIndex + 1) % videoData.videos.length;
+          updateVideoUI();
+        }, 4000);
+      }
+      function restartVideoTimer() {
+        clearInterval(videoInterval);
+        startVideoSlider();
+      }
+
+      function attachVideoListeners() {
+        const player = document.getElementById("video-player");
+        if (!player) return;
+
+        player.addEventListener("play", () => {
+          clearInterval(videoInterval);
+        });
+
+        player.addEventListener("pause", () => {
+          restartVideoTimer();
+        });
+
+        player.addEventListener("ended", () => {
+          restartVideoTimer();
+        });
+      }
+      initVideoSlider();
+      window.addEventListener("resize", initVideoSlider);
+    </script>
+  </body>
+</html>

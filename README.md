@@ -1,4 +1,4 @@
-# 📱 App Previews
+#  App Previews
 
 This repository contains a collection of mobile app previews.
 
@@ -16,15 +16,14 @@ Each app is organized into its own folder and includes:
 ## Projects
 
 ### Real Estate App
+- Preview included in this repo  
+- 🔗 Source Code: https://github.com/Altamash-khn/real-estate-app  
 
-Contains preview screenshots, demo video, and a web showcase.
-🔗 Source Code: https://github.com/Altamash-khn/real-estate-app
+---
 
 ### Movie App
-
-Contains preview screenshots, demo video, and a web showcase.
-🔗 Source Code: https://github.com/Altamash-khn/Mobile-movie-app
-
+- Preview included in this repo  
+- 🔗 Source Code: https://github.com/Altamash-khn/Mobile-movie-app  
 ---
 
 ## Structure
@@ -43,6 +42,3 @@ This repo helps the above mentioned projects to show their demo
 
 ---
 
-## Author
-
-Altamash
